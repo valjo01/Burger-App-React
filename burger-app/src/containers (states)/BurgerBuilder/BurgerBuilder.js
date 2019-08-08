@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import Aux from '../../hoc/Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
 // global constant-> capital letters
 const INGREDIENT_PRICES = {
@@ -11,7 +13,6 @@ const INGREDIENT_PRICES = {
     meat: 1.5,
     bacon: 1.0
 }
-
 
 class BurgerBuilder extends Component {
     state = {
@@ -22,7 +23,8 @@ class BurgerBuilder extends Component {
             meat: 0
         },
         purchasable: false,
-        totalPrice: 4
+        totalPrice: 4,
+        purchasing: false
     }
 
     // if > 1 ingredients order Btn. avaiable
@@ -85,6 +87,18 @@ class BurgerBuilder extends Component {
         this.updatePurchaseState(updatedIngredients);
     }
 
+    purchaseHandler = () => {
+        this.setState({purchasing: true});
+    }
+
+    purchaseCancelHandler = () => {
+        this.setState({purchasing : false})
+    };
+
+    purchaseContinueHandler = () => {
+        alert('Thanks for your order!');
+    };
+
     render () {
         // disable Btns
         // copy object from state
@@ -107,7 +121,21 @@ class BurgerBuilder extends Component {
                     price={this.state.totalPrice}
                     // purchasable
                     purchasable={this.state.purchasable}
+                    // show modal
+                    ordered={this.purchaseHandler}
+                    
                 />
+                <Modal 
+                    show={this.state.purchasing} 
+                    modalClosed={this.purchaseCancelHandler}>
+                    <OrderSummary 
+                        ingredients={this.state.ingredients}
+                        // purchaseCanceled Btn
+                        purchaseCanceled={this.purchaseCancelHandler}
+                        // purchaseContinue Btn
+                        purchaseContinue={this.purchaseContinueHandler}></OrderSummary>
+                        
+                </Modal>
             </Aux>
         );
     }
