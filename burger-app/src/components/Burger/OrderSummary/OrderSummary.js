@@ -12,7 +12,6 @@ const orderSummary = (props) => {
          <li key={igKey}>
             <span style={{textTransform: 'capitalize'}}>{igKey}</span>: {props.ingredients[igKey]}
         </li>);
-        {/* <li>Salad : 1</li> */}
     });
 
     return (
@@ -23,7 +22,7 @@ const orderSummary = (props) => {
                 {ingredientSummary}
             </ul>
 
-            <p><strong><h3>Total price: {props.price.toFixed(2)}</h3></strong></p>
+            <h3><p><strong>Total price: {props.price.toFixed(2)}</strong></p></h3>
 
             <p>Continue to Checkout?</p>
 
